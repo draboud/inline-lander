@@ -5,7 +5,6 @@
   var BLACKOUT_INIT = 100;
   var DELAY_BETWEEN_START_CLICK_AND_PLAY = 500;
   var DELAY_BEFORE_UI_START = 1500;
-  var DELAY_BEFORE_FEATURE_TEXT = 1e3;
   var PAUSE_AFTER_FEATURE_END = 1500;
   var NO_OF_INSTRUCTION_VIDS = 4;
   var PAUSE_BETWEEN_INSTRUCTION_VIDS = 1e3;
@@ -678,16 +677,6 @@
       DeactivateActivateCurrentCtrlButtons("features", false);
     }, PAUSE_AFTER_FEATURE_END);
   };
-  var MainCtrlBtnsFeatures = function() {
-    clearTimeout(features_default.featureTextTimer);
-    clearTimeout(features_default.featureVidTimer);
-    FlashBlackout(BLACKOUT_STANDARD);
-    PrepSectionAndPlayVideo("features", ctrlBtnIndex);
-    DeactivateActivateCurrentCtrlButtons("features", ctrlBtnIndex);
-    features_default.featureTextTimer = setTimeout(function() {
-      DeactivateActivateSectionText("feature", ctrlBtnIndex);
-    }, DELAY_BEFORE_FEATURE_TEXT);
-  };
   var MainComponentVidsViewsEnds = function() {
     DeactivateActivateSectionImage(currentViewName);
     DeactivateActivateSectionText("main");
@@ -777,26 +766,6 @@
       instructions_default.allVidsInstructionsMobileP[instructions_default.currentInstructionVid + dropdownIndex * NO_OF_INSTRUCTION_VIDS].play();
     }
   };
-  var MainCtrlBtnsInstructions = function() {
-    SetPauseFlag(false);
-    pauseWrapper.classList.remove("active");
-    clearTimeout(instructions_default.instructionVidTimer);
-    instructions_default.instructionVidTimer = null;
-    FlashBlackout(BLACKOUT_STANDARD);
-    ActivateSectionVideo(
-      "instructions",
-      instructions_default.currentInstructionVid
-    );
-    PrepSectionAndPlayVideo(
-      "instructions",
-      instructions_default.currentInstructionVid,
-      true
-    );
-    DeactivateActivateCurrentCtrlButtons(
-      "instructions",
-      instructions_default.currentInstructionVid
-    );
-  };
   var init = function() {
     nav_default.AddHandlerStartButton(MainStartButton);
     nav_default.AddHandlerAllNavLinks(MainAllNavLinks);
@@ -818,7 +787,6 @@
     );
     nav_default.AddHandlerAllCtrlBtnsMouseEnter(MainAllCtrlBtnsMouseEnter);
     nav_default.AddHandlerAllCtrlBtnsMouseLeave(MainAllCtrlBtnsMouseLeave);
-    features_default.AddHandlerCtrlBtnWrapperFeatures(MainCtrlBtnsFeatures);
     components_default.AddHandlerOptionsMenuBtnClick(MainOptionsMenuShow);
     components_default.AddHandlerOptionsMenuWrapperHoverIn(MainOptionsMenuShow);
     components_default.AddHandlerOptionsMenuWrapperHoverOut(MainOptionsMenuHide);
@@ -831,7 +799,6 @@
     instructions_default.AddHandlerVidsInstructionsPause(
       MainVidsInstructionsPauseUnpause
     );
-    instructions_default.AddHandlerCtrlBtnWrapperInstructions(MainCtrlBtnsInstructions);
     ctrlBtnWrapper.classList.remove("active");
   };
   init();

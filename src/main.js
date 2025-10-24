@@ -300,7 +300,7 @@ const init = function () {
   );
   navigation.AddHandlerAllCtrlBtnsMouseEnter(MainAllCtrlBtnsMouseEnter);
   navigation.AddHandlerAllCtrlBtnsMouseLeave(MainAllCtrlBtnsMouseLeave);
-  features.AddHandlerCtrlBtnWrapperFeatures(MainCtrlBtnsFeatures);
+  // features.AddHandlerCtrlBtnWrapperFeatures(MainCtrlBtnsFeatures);
   components.AddHandlerOptionsMenuBtnClick(MainOptionsMenuShow);
   components.AddHandlerOptionsMenuWrapperHoverIn(MainOptionsMenuShow);
   components.AddHandlerOptionsMenuWrapperHoverOut(MainOptionsMenuHide);
@@ -313,7 +313,7 @@ const init = function () {
   instructions.AddHandlerVidsInstructionsPause(
     MainVidsInstructionsPauseUnpause
   );
-  instructions.AddHandlerCtrlBtnWrapperInstructions(MainCtrlBtnsInstructions);
+  // instructions.AddHandlerCtrlBtnWrapperInstructions(MainCtrlBtnsInstructions);
   global.ctrlBtnWrapper.classList.remove("active");
 };
 //.......................................................................
