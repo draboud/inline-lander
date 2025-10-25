@@ -128,6 +128,7 @@ const MainFeaturesVidsEnds = function () {
   }, PAUSE_AFTER_FEATURE_END);
 };
 const MainCtrlBtnsFeatures = function () {
+  if (global.ctrlBtnIndex != 0) return;
   clearTimeout(features.featureTextTimer);
   clearTimeout(features.featureVidTimer);
   global.FlashBlackout(BLACKOUT_STANDARD);
@@ -300,7 +301,7 @@ const init = function () {
   );
   navigation.AddHandlerAllCtrlBtnsMouseEnter(MainAllCtrlBtnsMouseEnter);
   navigation.AddHandlerAllCtrlBtnsMouseLeave(MainAllCtrlBtnsMouseLeave);
-  // features.AddHandlerCtrlBtnWrapperFeatures(MainCtrlBtnsFeatures);
+  features.AddHandlerCtrlBtnWrapperFeatures(MainCtrlBtnsFeatures);
   components.AddHandlerOptionsMenuBtnClick(MainOptionsMenuShow);
   components.AddHandlerOptionsMenuWrapperHoverIn(MainOptionsMenuShow);
   components.AddHandlerOptionsMenuWrapperHoverOut(MainOptionsMenuHide);
