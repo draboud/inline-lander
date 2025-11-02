@@ -36,13 +36,13 @@ const MainStartButton = function () {
   }, DELAY_BETWEEN_START_CLICK_AND_PLAY);
 };
 const MainAllNavLinks = function (navLink, dropdownIndex) {
-  if (dropdownIndex) global.SetDropdownIndex(dropdownIndex);
-  else {
+  if (dropdownIndex) {
+    global.SetDropdownIndex(dropdownIndex);
+  } else {
     dropdownIndex = 0;
     global.SetDropdownIndex(0);
   }
   global.SetActiveSectionName(navLink.classList[1]);
-  if (!dropdownIndex) dropdownIndex = 0;
   global.SetActiveSection(
     document.querySelectorAll(`.section_${global.activeSectionName}`)[
       dropdownIndex
@@ -88,8 +88,8 @@ const MainAllNavLinkDropDownOptsHoverIn = function (navLinkDropdownBtn) {
 const MainAllNavLinkDropDownOptsHoverOut = function (navLinkDropdownBtn) {
   navLinkDropdownBtn.classList.remove("hovered");
 };
-const MainAllNavLinkDropDownOptsClick = function (dropdownIndex) {
-  MainAllNavLinks(global.activeSectionName, dropdownIndex);
+const MainAllNavLinkDropDownOptsClick = function () {
+  MainAllNavLinks(global.activeSectionName, global.dropdownIndex);
   global.DeactivateActivateNavDropdown();
   document.querySelector(".w-nav-overlay").style.display = "none";
   document
@@ -206,18 +206,32 @@ const MainCtrlBtnsComponents = function () {
 const MainInstructionsVidsEnds = function () {
   instructions.instructionVidTimer = setTimeout(function () {
     instructions.currentInstructionVid += 1;
+    // if (
+    //   instructions.currentInstructionVid === NO_OF_INSTRUCTION_VIDS &&
+    //   INSTRUCTION_VIDS_LOOPING
+    // ) {
+    //   instructions.currentInstructionVid = 0;
+    // } else if (
+    //   instructions.currentInstructionVid === NO_OF_INSTRUCTION_VIDS &&
+    //   !INSTRUCTION_VIDS_LOOPING
+    // ) {
+    //   instructions.ResetToInstructionsMainScreen();
+    //   return;
+    // }
+    //*******************************************************
     if (
-      instructions.currentInstructionVid === NO_OF_INSTRUCTION_VIDS &&
+      instructions.currentInstructionVid === global.instructionVidsCount &&
       INSTRUCTION_VIDS_LOOPING
     ) {
       instructions.currentInstructionVid = 0;
     } else if (
-      instructions.currentInstructionVid === NO_OF_INSTRUCTION_VIDS &&
+      instructions.currentInstructionVid === global.instructionVidsCount &&
       !INSTRUCTION_VIDS_LOOPING
     ) {
       instructions.ResetToInstructionsMainScreen();
       return;
     }
+    //*******************************************************
     global.FlashBlackout(BLACKOUT_STANDARD);
     global.ActivateSectionVideo(
       "instructions",
@@ -314,7 +328,7 @@ const init = function () {
   instructions.AddHandlerVidsInstructionsPause(
     MainVidsInstructionsPauseUnpause
   );
-  // instructions.AddHandlerCtrlBtnWrapperInstructions(MainCtrlBtnsInstructions);
+  instructions.AddHandlerCtrlBtnWrapperInstructions(MainCtrlBtnsInstructions);
   global.ctrlBtnWrapper.classList.remove("active");
 };
 //.......................................................................

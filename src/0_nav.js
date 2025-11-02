@@ -62,12 +62,13 @@ class navigation {
       el.addEventListener("mouseleave", function () {
         handler2(el);
       });
-      el.addEventListener("click", function () {
+      el.addEventListener("click", function (e) {
         global.SetActiveSectionName(
           el.parentElement.parentElement.querySelector(".nav_menu_link")
         );
-        let dropdownIndex = index;
-        handler3(dropdownIndex);
+        global.SetDropdownIndex(index);
+
+        handler3();
       });
     });
   };
