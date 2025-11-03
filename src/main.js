@@ -91,10 +91,8 @@ const MainAllNavLinkDropDownOptsHoverOut = function (navLinkDropdownBtn) {
 const MainAllNavLinkDropDownOptsClick = function () {
   MainAllNavLinks(global.activeSectionName, global.dropdownIndex);
   global.DeactivateActivateNavDropdown();
-  document.querySelector(".w-nav-overlay").style.display = "none";
-  document
-    .querySelector(".nav_button.w-nav-button")
-    .classList.remove("w--open");
+  if (window.getComputedStyle(global.mobileMenuIndicator).display === "block")
+    document.querySelector(".nav_button.w-nav-button").click();
 };
 const MainDropDownIconBtn = function () {
   global.DeactivateActivateNavDropdown();
@@ -206,19 +204,6 @@ const MainCtrlBtnsComponents = function () {
 const MainInstructionsVidsEnds = function () {
   instructions.instructionVidTimer = setTimeout(function () {
     instructions.currentInstructionVid += 1;
-    // if (
-    //   instructions.currentInstructionVid === NO_OF_INSTRUCTION_VIDS &&
-    //   INSTRUCTION_VIDS_LOOPING
-    // ) {
-    //   instructions.currentInstructionVid = 0;
-    // } else if (
-    //   instructions.currentInstructionVid === NO_OF_INSTRUCTION_VIDS &&
-    //   !INSTRUCTION_VIDS_LOOPING
-    // ) {
-    //   instructions.ResetToInstructionsMainScreen();
-    //   return;
-    // }
-    //*******************************************************
     if (
       instructions.currentInstructionVid === global.instructionVidsCount &&
       INSTRUCTION_VIDS_LOOPING
@@ -231,7 +216,6 @@ const MainInstructionsVidsEnds = function () {
       instructions.ResetToInstructionsMainScreen();
       return;
     }
-    //*******************************************************
     global.FlashBlackout(BLACKOUT_STANDARD);
     global.ActivateSectionVideo(
       "instructions",

@@ -47,6 +47,9 @@
   var sectionsInstructions = document.querySelectorAll(
     ".section_instructions"
   );
+  var mobileMenuIndicator = document.querySelector(
+    ".mobile-menu-indicator"
+  );
   var dropdownIndex;
   var allSections = [
     sectionFeatures,
@@ -661,8 +664,8 @@
   var MainAllNavLinkDropDownOptsClick = function() {
     MainAllNavLinks(activeSectionName, dropdownIndex);
     DeactivateActivateNavDropdown();
-    document.querySelector(".w-nav-overlay").style.display = "none";
-    document.querySelector(".nav_button.w-nav-button").classList.remove("w--open");
+    if (window.getComputedStyle(mobileMenuIndicator).display === "block")
+      document.querySelector(".nav_button.w-nav-button").click();
   };
   var MainDropDownIconBtn = function() {
     DeactivateActivateNavDropdown();

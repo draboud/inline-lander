@@ -36,6 +36,9 @@ export const sectionComponents = document.querySelector(".section_components");
 export const sectionsInstructions = document.querySelectorAll(
   ".section_instructions"
 );
+export const mobileMenuIndicator = document.querySelector(
+  ".mobile-menu-indicator"
+);
 export let dropdownIndex;
 export const allSections = [
   sectionFeatures,
