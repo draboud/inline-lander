@@ -5,6 +5,8 @@
 import {
   BLACKOUT_INIT,
   BLACKOUT_STANDARD,
+  COMP_BTNS_END_RANGE_A,
+  COMP_BTNS_START_RANGE_A,
   DELAY_BEFORE_FEATURE_TEXT,
   DELAY_BEFORE_UI_START,
   DELAY_BETWEEN_START_CLICK_AND_PLAY,
@@ -126,7 +128,7 @@ const MainFeaturesVidsEnds = function () {
   }, PAUSE_AFTER_FEATURE_END);
 };
 const MainCtrlBtnsFeatures = function () {
-  if (global.ctrlBtnIndex != 0) return;
+  // if (global.ctrlBtnIndex != 0) return;
   clearTimeout(features.featureTextTimer);
   clearTimeout(features.featureVidTimer);
   global.FlashBlackout(BLACKOUT_STANDARD);

@@ -67,7 +67,6 @@ class navigation {
           el.parentElement.parentElement.querySelector(".nav_menu_link")
         );
         global.SetDropdownIndex(index);
-
         handler3();
       });
     });

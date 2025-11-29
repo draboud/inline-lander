@@ -77,10 +77,10 @@ class components {
       el.addEventListener("ended", () => {
         if (global.currentViewName === "view-a") {
           global.SetStartBtnRange(0);
-          global.SetEndBtnRange(5);
+          global.SetEndBtnRange(4);
         } else {
-          global.SetStartBtnRange(6);
-          global.SetEndBtnRange(11);
+          global.SetStartBtnRange(5);
+          global.SetEndBtnRange(6);
         }
         handler();
       });
