@@ -1,4 +1,4 @@
-// console.log("InLine Lander - Oct 24, 2025");
+// console.log("InLine Lander - Dec 10, 2025");
 //.......................................................................
 //.......................................................................
 //IMPORTS
@@ -186,6 +186,8 @@ const MainTextImgBtn = function () {
   components.dimmer.classList.toggle("active");
 };
 const MainBackBtn = function () {
+  components.textImgBtnLabel = "image";
+  components.textImgBtn.textContent = "image";
   components.activeDatasheet.querySelector(".comp-data-body-wrap").scroll(0, 0);
   global.ResetSectionVideos("components", "datasheets");
   global.DeactivateActivateSectionImage(global.currentViewName);
