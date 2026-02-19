@@ -1,4 +1,4 @@
-// console.log("InLine Lander - Dec 10, 2025");
+console.log("InLine Lander - Feb 18, 2026");
 //.......................................................................
 //.......................................................................
 //IMPORTS
@@ -48,7 +48,7 @@ const MainAllNavLinks = function (navLink, dropdownIndex) {
   global.SetActiveSection(
     document.querySelectorAll(`.section_${global.activeSectionName}`)[
       dropdownIndex
-    ]
+    ],
   );
   global.navLinkDropdownMenu.classList.remove("active");
   navigation.ActivateNavLink();
@@ -70,7 +70,7 @@ const MainAllNavLinks = function (navLink, dropdownIndex) {
   global.ResetSectionVideos("all");
   global.DeactivateActivateSectionText("main");
   global.ActivateSection(dropdownIndex);
-  global.ActivateSectionButtons();
+  global.ActivateSectionBtns();
   if (global.activeSectionName === "features") global.PlaySectionVideo("main");
 };
 const MainNavLinkInstructionsClick = function () {
@@ -128,7 +128,6 @@ const MainFeaturesVidsEnds = function () {
   }, PAUSE_AFTER_FEATURE_END);
 };
 const MainCtrlBtnsFeatures = function () {
-  // if (global.ctrlBtnIndex != 0) return;
   clearTimeout(features.featureTextTimer);
   clearTimeout(features.featureVidTimer);
   global.FlashBlackout(BLACKOUT_STANDARD);
@@ -152,7 +151,7 @@ const MainComponentVidsViewsEnds = function () {
   global.DeactivateActivateCtrlBtnRange(
     "components",
     global.startBtnRange,
-    global.endBtnRange
+    global.endBtnRange,
   );
   components.ctrlBtnWrapperComponents.classList.add("active");
 };
@@ -195,7 +194,7 @@ const MainBackBtn = function () {
   components.ActivateDeactivateDatasheetTextAndButtons(false);
   global.DeactivateActivateSectionText("main");
   global.ActivateSection();
-  global.ActivateSectionButtons();
+  global.ActivateSectionBtns();
 };
 const MainCtrlBtnsComponents = function () {
   components.optsMenuWrapper.classList.remove("active");
@@ -223,40 +222,37 @@ const MainInstructionsVidsEnds = function () {
     global.FlashBlackout(BLACKOUT_STANDARD);
     global.ActivateSectionVideo(
       "instructions",
-      instructions.currentInstructionVid
+      instructions.currentInstructionVid,
     );
     global.PlaySectionVideo(
       "instructions",
       instructions.currentInstructionVid,
-      true
+      true,
     );
     global.DeactivateActivateCurrentCtrlButtons(
       "instructions",
-      instructions.currentInstructionVid
+      instructions.currentInstructionVid,
     );
   }, PAUSE_BETWEEN_INSTRUCTION_VIDS);
 };
 const MainVidsInstructionsPauseUnpause = function () {
+  const currentActiveInstructions = [
+    ...document.querySelectorAll(".section_instructions"),
+  ].find((el) => el.classList.contains("active"));
+  const currentInsVidDiv = [
+    ...currentActiveInstructions.querySelectorAll(".video-wrap"),
+  ].find((el) => el.classList.contains("active"));
+  const currentInsVidDivMP = [
+    ...currentActiveInstructions.querySelectorAll(".video-wrap.mobile-p"),
+  ].find((el) => el.classList.contains("active"));
   if (global.pauseFlag) {
     global.pauseWrapper.classList.add("active");
-    instructions.allVidsInstructions[
-      instructions.currentInstructionVid +
-        global.dropdownIndex * NO_OF_INSTRUCTION_VIDS
-    ].pause();
-    instructions.allVidsInstructionsMobileP[
-      instructions.currentInstructionVid +
-        global.dropdownIndex * NO_OF_INSTRUCTION_VIDS
-    ].pause();
+    currentInsVidDiv.querySelector(".vid").pause();
+    currentInsVidDivMP.querySelector(".vid-mobile-p").pause();
   } else {
     global.pauseWrapper.classList.remove("active");
-    instructions.allVidsInstructions[
-      instructions.currentInstructionVid +
-        global.dropdownIndex * NO_OF_INSTRUCTION_VIDS
-    ].play();
-    instructions.allVidsInstructionsMobileP[
-      instructions.currentInstructionVid +
-        global.dropdownIndex * NO_OF_INSTRUCTION_VIDS
-    ].play();
+    currentInsVidDiv.querySelector(".vid").play();
+    currentInsVidDivMP.querySelector(".vid-mobile-p").play();
   }
 };
 const MainCtrlBtnsInstructions = function () {
@@ -267,16 +263,16 @@ const MainCtrlBtnsInstructions = function () {
   global.FlashBlackout(BLACKOUT_STANDARD);
   global.ActivateSectionVideo(
     "instructions",
-    instructions.currentInstructionVid
+    instructions.currentInstructionVid,
   );
   global.PrepSectionAndPlayVideo(
     "instructions",
     instructions.currentInstructionVid,
-    true
+    true,
   );
   global.DeactivateActivateCurrentCtrlButtons(
     "instructions",
-    instructions.currentInstructionVid
+    instructions.currentInstructionVid,
   );
 };
 //.......................................................................
@@ -293,13 +289,13 @@ const init = function () {
   navigation.AddHandlerAllNavLinkDropdownOpts(
     MainAllNavLinkDropDownOptsHoverIn,
     MainAllNavLinkDropDownOptsHoverOut,
-    MainAllNavLinkDropDownOptsClick
+    MainAllNavLinkDropDownOptsClick,
   );
   navigation.AddHandlerDropdownIconBtn(MainDropDownIconBtn);
   navigation.AddHandlerNavBtnMobile(MainNavBtnMobile);
   features.AddHandlerVidsFeaturesEnd(MainFeaturesVidsEnds);
   components.AddHandlerVidsComponentDatasheetsEnds(
-    MainVidsComponentDatasheetsEnds
+    MainVidsComponentDatasheetsEnds,
   );
   navigation.AddHandlerAllCtrlBtnsMouseEnter(MainAllCtrlBtnsMouseEnter);
   navigation.AddHandlerAllCtrlBtnsMouseLeave(MainAllCtrlBtnsMouseLeave);
@@ -314,7 +310,7 @@ const init = function () {
   components.AddHandlerCtrlBtnWrapperComponents(MainCtrlBtnsComponents);
   instructions.AddHandlerVidsInstructionsEnds(MainInstructionsVidsEnds);
   instructions.AddHandlerVidsInstructionsPause(
-    MainVidsInstructionsPauseUnpause
+    MainVidsInstructionsPauseUnpause,
   );
   instructions.AddHandlerCtrlBtnWrapperInstructions(MainCtrlBtnsInstructions);
   global.ctrlBtnWrapper.classList.remove("active");

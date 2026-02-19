@@ -1,7 +1,7 @@
 //............................................................
 //............................................................
 //IMPORTS
-import { BLACKOUT_STANDARD } from "./0_config";
+import { BLACKOUT_STANDARD, LONGEST_INST_VIDS_COUNT } from "./0_config";
 //............................................................
 //............................................................
 //GLOBAL DEFINITIONS
@@ -9,23 +9,23 @@ export const startButtonWrapper = document.querySelector(".start-btn-wrapper");
 export const startButton = document.querySelector(".start-btn");
 export const navBar = document.querySelector(".nav_component");
 export const navLinkFeatures = document.querySelector(
-  ".nav_menu_link.features"
+  ".nav_menu_link.features",
 );
 export const navLinkComponents = document.querySelector(
-  ".nav_menu_link.components"
+  ".nav_menu_link.components",
 );
 export const navLinkInstructions = document.querySelector(
-  ".nav_menu_link.instructions"
+  ".nav_menu_link.instructions",
 );
 export const allNavLinks = document.querySelectorAll(".nav_menu_link");
 export const allNavLinkBars = document.querySelectorAll(".nav_menu_link-bar");
 export const navButtonMobile = document.querySelector(".nav_button");
 export const navLinkDropdown = document.querySelector(
-  ".nav_menu_link.instructions"
+  ".nav_menu_link.instructions",
 );
 export const navLinkDropdownMenu = document.querySelector(".nav_menu_dropdown");
 export const allNavLinkDropdownOpts = navLinkDropdownMenu.querySelectorAll(
-  ".nav_menu_link-dropdown"
+  ".nav_menu_link-dropdown",
 );
 export const dropdownIconBtn = document.querySelector(".dropdown-icon-wrap");
 export const loader = document.querySelector(".loader-text");
@@ -34,10 +34,10 @@ export const pauseWrapper = document.querySelector(".pause-wrapper");
 export const sectionFeatures = document.querySelector(".section_features");
 export const sectionComponents = document.querySelector(".section_components");
 export const sectionsInstructions = document.querySelectorAll(
-  ".section_instructions"
+  ".section_instructions",
 );
 export const mobileMenuIndicator = document.querySelector(
-  ".mobile-menu-indicator"
+  ".mobile-menu-indicator",
 );
 export let dropdownIndex;
 export const allSections = [
@@ -71,8 +71,9 @@ export function SetNavDropdownFlag(newValue) {
 }
 export function SetDropdownIndex(newValue) {
   dropdownIndex = newValue;
-  if (dropdownIndex === 0) instructionVidsCount = 5;
-  else instructionVidsCount = 3;
+  if (dropdownIndex === 0) instructionVidsCount = 4;
+  else if (dropdownIndex === 1) instructionVidsCount = 3;
+  else if (dropdownIndex === 2) instructionVidsCount = 1;
 }
 export function SetActiveSection(newValue) {
   activeSection = newValue;
@@ -107,7 +108,7 @@ export const DeactivateActivateNavDropdown = function () {
 export const PrepSectionAndPlayVideo = function (
   vidName,
   vidIndex,
-  pauseEnable
+  pauseEnable,
 ) {
   DeactivateActivateSectionText();
   DeactivateActivateSectionImage();
@@ -139,13 +140,12 @@ export const DeactivateActivateSectionImage = function (imgName, imgIndex) {
           el2.classList.remove("active");
           if (index === imgIndex) el2.classList.add("active");
         });
-        el.querySelectorAll(".section-img.mobile-p").forEach(function (
-          el2,
-          index
-        ) {
-          el2.classList.remove("active");
-          if (index === imgIndex) el2.classList.add("active");
-        });
+        el.querySelectorAll(".section-img.mobile-p").forEach(
+          function (el2, index) {
+            el2.classList.remove("active");
+            if (index === imgIndex) el2.classList.add("active");
+          },
+        );
       }
     }
   });
@@ -153,7 +153,7 @@ export const DeactivateActivateSectionImage = function (imgName, imgIndex) {
 export const ResetSectionVideos = function (
   sectionName,
   subsectionName,
-  vidIndex
+  vidIndex,
 ) {
   if (sectionName === "all") {
     document.querySelectorAll(`.vid,.vid-mobile-p`).forEach(function (el) {
@@ -234,16 +234,8 @@ export const PlaySectionVideo = function (vidName, vidIndex, pauseEnable) {
     [vidIndex].querySelector(".vid-mobile-p")
     .play();
 };
-export const ActivateSectionButtons = function () {
-  if (dropdownIndex === 1) HideInstructionCtrlBtns();
-  else {
-    ctrlBtnWrapper
-      .querySelector(".section-wrap-btns.instructions")
-      .querySelectorAll(".ctrl-btn.instructions")[3].style.display = "flex";
-    ctrlBtnWrapper
-      .querySelector(".section-wrap-btns.instructions")
-      .querySelectorAll(".ctrl-btn.instructions")[4].style.display = "flex";
-  }
+export const ActivateSectionBtns = function () {
+  if (activeSectionName === "instructions") ActivateInsBtns();
   allSectionBtnWrappers.forEach(function (el) {
     el.classList.remove("active");
   });
@@ -251,6 +243,19 @@ export const ActivateSectionButtons = function () {
     .querySelector(`.section-wrap-btns.${activeSectionName}`)
     .classList.add("active");
   backBtn.classList.remove("active");
+};
+export const ActivateInsBtns = function () {
+  if (dropdownIndex === 0) {
+    instructionVidsCount = 4;
+    HideInstructionCtrlBtns();
+    return;
+  } else if (dropdownIndex === 1) {
+    instructionVidsCount = 3;
+    HideInstructionCtrlBtns();
+  } else if (dropdownIndex === 2) {
+    instructionVidsCount = 2;
+    HideInstructionCtrlBtns();
+  }
 };
 export const FlashBlackout = function (timerVariable) {
   blackout.classList.remove("off");
@@ -260,7 +265,7 @@ export const FlashBlackout = function (timerVariable) {
 };
 export const DeactivateActivateCurrentCtrlButtons = function (
   sectionName,
-  btnIndex
+  btnIndex,
 ) {
   document
     .querySelectorAll(`.ctrl-btn.${sectionName}`)
@@ -273,7 +278,7 @@ export const DeactivateActivateCurrentCtrlButtons = function (
 export const DeactivateActivateCtrlBtnRange = function (
   btnsName,
   startIndex,
-  endIndex
+  endIndex,
 ) {
   ctrlBtnWrapper
     .querySelector(`.section-wrap-btns.${btnsName}`)
@@ -283,13 +288,23 @@ export const DeactivateActivateCtrlBtnRange = function (
       if (index >= startIndex && index <= endIndex) el.classList.add("active");
     });
 };
+const ActivateAllCtrlBtns = function () {
+  ctrlBtnWrapper
+    .querySelectorAll(".ctrl-btn.instructions")
+    .forEach(function (el) {
+      el.style.display = "flex";
+    });
+};
 const HideInstructionCtrlBtns = function () {
   {
-    ctrlBtnWrapper
-      .querySelector(".section-wrap-btns.instructions")
-      .querySelectorAll(".ctrl-btn.instructions")[3].style.display = "none";
-    ctrlBtnWrapper
-      .querySelector(".section-wrap-btns.instructions")
-      .querySelectorAll(".ctrl-btn.instructions")[4].style.display = "none";
+    ActivateAllCtrlBtns();
+    const vidsToHideCounter = LONGEST_INST_VIDS_COUNT - instructionVidsCount;
+    if (vidsToHideCounter !== 0) {
+      for (let i = 0; i < vidsToHideCounter; i++) {
+        [...ctrlBtnWrapper.querySelectorAll(".ctrl-btn.instructions")][
+          LONGEST_INST_VIDS_COUNT - 1 - i
+        ].style.display = "none";
+      }
+    }
   }
 };
